@@ -1,0 +1,29 @@
+server:
+  port: 8080
+
+# KeyCloak Config
+keycloak:
+  realm: myrealm
+  url: http://0.0.0.0:8180
+  secret: U2VuDnofJOfL9K0Dct1X3NjUlVIYCkHa
+
+spring:
+  application:
+    name: individuals-api
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${keycloak.url}/realms/${keycloak.realm}
+          jwk-set-uri: ${keycloak.url}/realms/${keycloak.realm}/protocol/openid-connect/certs
+
+# JWT Configuration
+jwt:
+  auth:
+    converter:
+      resource-id: individuals-api
+      principal-attribute: email
+
+person-ms:
+  url: http://localhost:8081/v1/api/individuals
+
